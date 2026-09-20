@@ -1,17 +1,14 @@
 name: Run tests on a pr
 
 on:
-  # run on pull request to main excluding changes that are only on doc or example folders
-  pull_request:
-    branches:
-      - main
-    paths-ignore:
-      - "doc/**"
+  # dispatch-only on the CI fork; the pull_request trigger would fire on the sync push
+  workflow_dispatch:
 
 jobs:
   run-test:
     name: ${{ matrix.python-version }}-${{ matrix.os }}-${{matrix.tox-env}}
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
     strategy:
       # run this job using this matrix
       matrix:
